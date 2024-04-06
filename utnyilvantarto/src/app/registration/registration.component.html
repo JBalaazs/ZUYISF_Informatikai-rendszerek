@@ -1,0 +1,25 @@
+<div class="m-5">
+
+    <form #registerForm="ngForm">
+
+        <div class="form-group mb-4">
+            <label>Felhasználónév:</label>
+            <input type="text" class="form-control" name="username" ngModel pattern="^[a-zA-ZáÁéÉíÍóÓöÖőŐúÚüÜűŰ]{3,}$" required>
+            <small class="text-danger" *ngIf="registerForm.controls['username'].invalid">[Legalább 3 karakter ...]</small>
+        </div>
+
+        <div class="form-group mb-4">
+            <label>Jelszó:</label>
+            <input type="password" class="form-control" name="password" ngModel pattern="^[a-zA-ZáÁéÉíÍóÓöÖőŐúÚüÜűŰ]{3,}$" required>
+            <small class="text-danger" *ngIf="registerForm.controls['password'].invalid">[Legalább 3 karakter ...]</small>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary m-2" (click)="registration(registerForm)">Regisztráció</button>
+            <button type="submit" class="btn btn-primary m-2" (click)="login(registerForm)">Bejelentkezés</button>
+            <button type="submit" class="btn btn-primary m-2" (click)="logout(registerForm)">Kijelentkezés</button>
+        </div>
+
+    </form>
+
+</div>

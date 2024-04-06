@@ -1,0 +1,23 @@
+<div *ngFor="let car of cars">
+
+    <div class="card m-2">
+    
+        <div class="card-body  text-center">
+
+            <p class="card-text">
+                Rendszám: {{ car.license_plate }}
+                <span class="separator">|</span>
+                Típus: {{ car.model }}
+                <span class="separator">|</span> 
+                Üzemanyag: {{ car.fuel }}
+                <span class="separator">|</span>
+                Fogyasztás: {{ car.consumption }} liter/100km
+                <span class="separator">|</span>
+                Kezdő kilóméteróra-állás: {{ car.starting_mileage }} km
+            </p>
+
+        </div>
+
+    </div>
+
+</div>

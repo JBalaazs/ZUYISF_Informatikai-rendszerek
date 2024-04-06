@@ -1,0 +1,78 @@
+<div class="m-5">
+
+    <form #reportForm="ngForm">
+        <fieldset [disabled]="!isLogged">
+            <div class="form-group mb-4" >
+                <label>Év és hónap választó:</label>
+                <select class="form-control" id="date" name="date" [(ngModel)]="defaultDate" required>
+                    <option *ngFor="let date of dates" [value]="date.dates">{{ date.dates }}</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-4">
+                <label>Autó rendszáma:</label>
+                <select class="form-control" id="plateSelect" name="plateSelect" [(ngModel)]="defaultPlate" required>
+                    <option *ngFor="let car of carsData" >{{ car.license_plate }}</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary m-1" [disabled]="isSearch" (click)="search(reportForm)">Keresés</button>
+            <button class="btn btn-primary" *ngIf="isSearch" (click)="newSearch()">Új keresés</button>
+        </fieldset>
+    </form>
+
+    <div *ngIf="summary.length > 0">
+
+        <div class="card m-2 text-center">
+            <p>
+                Kezdő óraállás - Befejező óraállás: <br />
+                {{ MinMax[0].minKM }} km - {{ MinMax[MinMax.length-1].maxKM }} km <br />
+            </p>
+        </div>
+
+        <div class="card m-2 text-center">
+            <p>
+                Megtett utak:
+            </p>
+            <div *ngFor="let places of CollectPlaces">
+                <p>
+                    {{ places.startPlace }} - {{ places.endPlace }}
+                </p>
+            </div>
+        </div>
+
+        <div class="card m-2">
+        
+            <div class="card-body text-center">
+
+                <p class="card-text">
+                    MAGÁN: <br />
+                    Megtett távolság: {{ summary[0].distancePrivate }} km <br />
+                    Üzemanyag fogyasztás: {{ summary[0].consumptionPrivate }} Ft <br />
+                    Általány költség: {{ summary[0].flatRatePrivate }} Ft <br />
+                    Összes költség: {{ summary[0].allCostPrivate }} Ft
+                </p>
+
+            </div>
+    
+        </div>
+
+        <div class="card m-2">
+        
+            <div class="card-body text-center">
+
+                <p class="card-text">
+                    CÉGES: <br />
+                    Megtett távolság: {{ summary[1].distanceCompany }} km <br />
+                    Üzemanyag fogyasztás: {{ summary[1].consumptionCompany }} Ft <br />
+                    Általány költség: {{ summary[1].flatRateCompany }} Ft <br />
+                    Összes költség: {{ summary[1].allCostCompany }} Ft
+                </p>
+
+            </div>
+    
+        </div>
+
+    </div>
+
+</div>

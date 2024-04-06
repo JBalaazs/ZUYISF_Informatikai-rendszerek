@@ -1,0 +1,152 @@
+<div class="m-5">
+    <form #tripForm="ngForm">
+        <fieldset [disabled]="!isLogged">
+            <div class="form-group mb-4">
+                <label>Autó kiválasztása:</label>
+                <select class="form-control" id="carSelect" name="carSelect" [(ngModel)]="defaultCar" required>
+                    <option *ngFor="let car of carsData">{{ car.model }}</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-4">
+                <label>Sofőr kiválasztása:</label>
+                <select class="form-control" id="driverSelect" name="driverSelect" [(ngModel)]="defaultDriver" required>
+                    <option *ngFor="let driver of validDrivers">{{ driver.name }}</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-4">
+                <label>Dátum:</label>
+                <input type="text" class="form-control" name="startDate" ngModel pattern="^[0-9]{4}-[0-9]{2}-[0-9]{2}$" required>
+                <small class="text-danger" *ngIf="tripForm.controls['startDate'].invalid">[ÉÉÉÉ-HH-NN]</small>
+            </div>
+
+            <div class="form-group mb-4">
+                <label>Utazás jellege:</label>
+                <select class="form-control" name="type" [(ngModel)]="defaultType" required>
+                    <option>Magán</option>
+                    <option>Céges</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-4">
+                <label>Indulás helye:</label>
+                <input type="text" class="form-control" name="startPlace" ngModel pattern="^[a-zA-ZáÁéÉíÍóÓöÖőŐúÚüÜűŰ]{3,}$" required>
+                <small class="text-danger" *ngIf="tripForm.controls['startPlace'].invalid">[Legalább 3 karakter ...]</small>
+            </div>
+
+            <div class="form-group mb-4">
+                <label>Érkezés helye:</label>
+                <input type="text" class="form-control" name="endPlace" ngModel pattern="^[a-zA-ZáÁéÉíÍóÓöÖőŐúÚüÜűŰ]{3,}$" required>
+                <small class="text-danger" *ngIf="tripForm.controls['endPlace'].invalid">[Legalább 3 karakter ...]</small>
+            </div>
+
+            <div class="form-group mb-4">
+                <label>Megtett távolság:</label>
+                <input type="text" class="form-control" name="distance" ngModel pattern="^[0-9]{1,}$" required>
+                <small class="text-danger" *ngIf="tripForm.controls['distance'].invalid">[Legalább 1 szám ...]</small>
+            </div>
+
+            <div class="form-group mb-4">
+                <label>Új kilóméteróra-állás</label>
+                <input type="text" class="form-control" name="newMileage" ngModel pattern="^[0-9]{1,}$" required>
+                <small class="text-danger" *ngIf="tripForm.controls['newMileage'].invalid">[Legalább 1 szám ...]</small>
+            </div>
+
+            <div class="form-group mb-4">
+                <label>Visszaút automatikus regisztrálása:</label>
+                <select class="form-control" name="return" [(ngModel)]="defaultReturn" required>
+                    <option>Igen</option>
+                    <option>Nem</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary mb-5" [disabled]="tripForm.invalid" (click)="saveTrip(tripForm)">Mentés</button>
+        </fieldset>
+    </form>
+
+    <div *ngFor="let trips of tripsData">
+
+        <div class="card m-2">
+        
+            <div class="card-body text-center">
+    
+                <p class="card-text">
+                    Autó: {{ trips.car }} <br />
+                    Sofőr: {{ trips.driver }} <br />
+                    Dátum: {{ trips.startDate }} <br />
+                    Utazás jellege: {{ trips.tripType }} <br />
+                    Indulás helye: {{ trips.startPlace }} <br />
+                    Érkezés helye: {{ trips.endPlace }} <br />
+                    Megtett távolság: {{ trips.distance }} km <br />
+                    Új kilóméteróra-állás: {{ trips.newMileage }} km
+                </p>
+                <button type="submit" class="btn btn-primary" [disabled]="!isLogged" (click)="changeTrip(trips)">Módosítás</button>
+            </div>
+    
+        </div>
+    
+    </div>
+
+    <div *ngIf="isVisibleChangeForm">
+
+        <form #changeForm="ngForm" *ngIf="selectedTrip">
+            
+            <div class="form-group mb-4">
+                <label>Autó kiválasztása:</label>
+                <select class="form-control" id="carSelect" name="carSelect" [(ngModel)]="selectedTrip[0].car" required>
+                    <option *ngFor="let car of carsData" [value]="car.model">{{ car.model}}</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-4">
+                <label>Sofőr kiválasztása:</label>
+                <select class="form-control" id="driverSelect" name="driverSelect" [(ngModel)]="selectedTrip[0].driver" required>
+                    <option *ngFor="let driver of validDrivers" [value]="driver.name">{{ driver.name }}</option>
+                </select>
+            </div>
+
+            <div class="form-group  mb-4">
+                <label>Dátum:</label>
+                <input type="text" class="form-control" [(ngModel)]="selectedTrip[0].startDate" name="startDate" pattern="^[0-9]{4}-[0-9]{2}-[0-9]{2}$" required>
+                <small class="text-danger" *ngIf="changeForm.controls['startDate'].invalid">[ÉÉÉÉ-HH-NN]</small>
+            </div>
+
+            <div class="form-group mb-4">
+                <label>Utazás jellege:</label>
+                <select class="form-control" name="type" [(ngModel)]="selectedTrip[0].tripType" required>
+                    <option>Magán</option>
+                    <option>Céges</option>
+                </select>
+            </div>
+
+            <div class="form-group  mb-4">
+                <label>Indulás helye:</label>
+                <input type="text" class="form-control" [(ngModel)]="selectedTrip[0].startPlace" name="startPlace"  pattern="^[a-zA-ZáÁéÉíÍóÓöÖőŐúÚüÜűŰ]{3,}$" required>
+                <small class="text-danger" *ngIf="changeForm.controls['startPlace'].invalid">[Legalább 3 karakter ...]</small>
+            </div>
+
+            <div class="form-group  mb-4">
+                <label>Érkezés helye:</label>
+                <input type="text" class="form-control" [(ngModel)]="selectedTrip[0].endPlace" name="endPlace"  pattern="^[a-zA-ZáÁéÉíÍóÓöÖőŐúÚüÜűŰ]{3,}$" required>
+                <small class="text-danger" *ngIf="changeForm.controls['endPlace'].invalid">[Legalább 3 karakter ...]</small>
+            </div>
+
+            <div class="form-group  mb-4">
+                <label>Megtett távolság</label>
+                <input type="text" class="form-control" [(ngModel)]="selectedTrip[0].distance" name="distance" pattern="^[0-9]{1,}$" required>
+                <small class="text-danger" *ngIf="changeForm.controls['distance'].invalid">[Legalább 1 szám ...]</small>
+            </div>
+
+            <div class="form-group  mb-4">
+                <label>Új kilóméteróra-állás:</label>
+                <input type="text" class="form-control" [(ngModel)]="selectedTrip[0].newMileage" name="newMileage" pattern="^[0-9]{1,}$" required>
+                <small class="text-danger" *ngIf="changeForm.controls['newMileage'].invalid">[Legalább 1 szám]</small>
+            </div>
+
+            <button class="btn btn-primary" [disabled]="changeForm.invalid" (click)="saveTripChanges(selectedTrip[0])">Mentés</button>
+        </form>
+    
+    </div>
+
+</div>
