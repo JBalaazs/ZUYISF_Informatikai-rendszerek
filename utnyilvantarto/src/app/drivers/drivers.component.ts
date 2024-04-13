@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DriverService } from './drivers.service';
-import { Driver } from '../models/Driver';
+import { Driver } from '../../../server/src/entity/Driver';
+import { TokenService } from '../token.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-drivers',
@@ -15,7 +17,7 @@ export class DriversComponent implements OnInit {
 
   drivers: Driver[] = [];
 
-  constructor(private driverService: DriverService) { }
+  constructor(private driverService: DriverService, private tokenService: TokenService) { }
 
   isLogged: boolean = false;
 
@@ -23,14 +25,14 @@ export class DriversComponent implements OnInit {
       this.driverService.getDrivers().subscribe((data: Driver[]) =>{
         this.drivers = data;
       })
-
-      const loggedInUserData = localStorage.getItem('jwtToken');
-
-      if(loggedInUserData && loggedInUserData!.length > 0){
-  
-        this.isLogged = true;
-  
-      }
+      
+      this.tokenService.checkTokenValidity().subscribe(isLogged => { /*token.service.ts*/
+        if (isLogged) {
+          this.isLogged = true;
+        } else {
+          this.isLogged = false;
+        }
+      });
   }
 
   isVisibleChangeForm: boolean = false;

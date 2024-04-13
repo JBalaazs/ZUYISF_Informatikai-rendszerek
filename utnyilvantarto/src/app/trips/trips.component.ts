@@ -2,9 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { TripService } from './trips.service';
-import { Car } from '../models/Car';
-import { Driver } from '../models/Driver';
-import { Trip } from '../models/Trip';
+import { Car } from '../../../server/src/entity/Car';
+import { Driver } from '../../../server/src/entity/Driver';
+import { Trip } from '../../../server/src/entity/Trip';
+import { TokenService } from '../token.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-trips',
@@ -31,9 +33,9 @@ export class TripsComponent implements OnInit{
   isVisibleChangeForm: boolean = false;
   selectedTrip: Trip[] = [];
 
-  isLogged: boolean = false;
+  isLogged:boolean = false;
 
-  constructor(private tripService: TripService) { }
+  constructor(private tripService: TripService, private tokenService: TokenService) { }
 
   ngOnInit(): void
   {
@@ -60,14 +62,13 @@ export class TripsComponent implements OnInit{
       this.tripsData = data;
     });
 
-    
-    const loggedInUserData = localStorage.getItem('jwtToken');
-
-    if(loggedInUserData && loggedInUserData!.length > 0){
-
-      this.isLogged = true;
-
-    }
+    this.tokenService.checkTokenValidity().subscribe(isLogged => { /*token.service.ts*/
+      if (isLogged) {
+        this.isLogged = true;
+      } else {
+        this.isLogged = false;
+      }
+    });
 
   }
 

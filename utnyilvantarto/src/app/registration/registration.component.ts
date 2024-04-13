@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RegistrationService } from './registration.service';
-import { User } from '../models/User';
+import { User } from '../../../server/src/entity/User';
 import { AuthResponse } from '../models/AuthResponse';
 import { Router } from '@angular/router';
 
@@ -101,8 +101,9 @@ export class RegistrationComponent implements OnInit {
 
       this.registrationService.login(userData).subscribe(
         (response: AuthResponse) => {
-          this.registrationService.saveJWT(response.jwtToken);
           
+          this.registrationService.saveJWT(response.jwtToken);
+    
           alert("Sikeres bejelentkezés!");
           this.router.navigate(['/drivers']);
           

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarService } from './car-register.service';
-import { Car } from '../models/Car';
+import { Car } from '../../../server/src/entity/Car';
 
 @Component({
   selector: 'app-car-register',

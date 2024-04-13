@@ -1,7 +1,7 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Car } from '../models/Car';
-import { Trip } from '../models/Trip';
+import { Car } from '../../../server/src/entity/Car';
+import { Trip } from '../../../server/src/entity/Trip';
 
 @Injectable({
     providedIn: 'root'
@@ -11,16 +11,11 @@ export class ReportService {
     constructor(private http: HttpClient) { }
 
     getCars() {
-        return this.http.get<Car[]>('http://localhost:3000/api/data/cars');
+        return this.http.get<Car[]>('/api/car');
     }
 
     getTrip() {
-        return this.http.get<Trip[]>('http://localhost:3000/api/data/trips');
+        return this.http.get<Trip[]>('/api/trip');
     }
-
-    callProtectedEndpoint(token: string) {
-        const headers = { Authorization: `Bearer ` + token };
-        return this.http.post<any>('http://localhost:3000/api/data/protected_endpoint', {}, { headers });
-      }
 
 }

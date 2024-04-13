@@ -2,13 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReportService } from './report.service';
-import { Car } from '../models/Car';
+import { Car } from '../../../server/src/entity/Car';
 import { NgForm } from '@angular/forms';
-import { Trip } from '../models/Trip';
+import { Trip } from '../../../server/src/entity/Trip';
 import { Report } from '../models/Report';
 import { ReportPlaces } from '../models/ReportPlaces';
 import { ReportDates } from '../models/ReportDates';
 import { ReportKM } from '../models/ReportKM';
+import { TokenService } from '../token.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-report',
@@ -49,6 +51,14 @@ export class ReportComponent implements OnInit{
         this.defaultPlate = this.carsData[0].license_plate;
       }
 
+      this.tokenService.checkTokenValidity().subscribe(isLogged => { /*token.service.ts*/
+        if (isLogged) {
+          this.isLogged = true;
+        } else {
+          this.isLogged = false;
+        }
+      });
+
     });
 
     this.reportService.getTrip().subscribe((data: Trip[]) => {
@@ -79,43 +89,11 @@ export class ReportComponent implements OnInit{
 
     });
 
-    const loggedInUserData = localStorage.getItem('jwtToken');
-
-    if (loggedInUserData && loggedInUserData.length > 0) 
-    {
-
-      this.reportService.callProtectedEndpoint(loggedInUserData).subscribe(
-        response => {
-          //console.log('Érvényes.');
-
-          if(loggedInUserData && loggedInUserData!.length > 0){
-
-            this.isLogged = true;
-            //console.log(loggedInUserData);
-      
-          }
-          
-        },
-        error => 
-        {
-
-          console.error(error);
-          //console.log('Érvénytelen.');
-          
-        }
-      );
-
-    } 
-    else 
-    {
-
-      console.log('Nincs érvényes token.');
-      
-    }
+    this.tokenService.checkTokenValidity(); /*token.service.ts.*/
 
   }
 
-  constructor(private reportService: ReportService) { }
+  constructor(private reportService: ReportService, private tokenService: TokenService) { }
 
   search(reportForm: NgForm){
 
