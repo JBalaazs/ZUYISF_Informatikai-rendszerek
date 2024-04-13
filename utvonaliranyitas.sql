@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Ápr 06. 16:50
+-- Létrehozás ideje: 2024. Ápr 13. 11:26
 -- Kiszolgáló verziója: 10.4.25-MariaDB
 -- PHP verzió: 8.1.10
 
@@ -24,55 +24,55 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `cars`
+-- Tábla szerkezet ehhez a táblához `car`
 --
 
-CREATE TABLE `cars` (
+CREATE TABLE `car` (
   `Id` int(11) NOT NULL,
-  `license_plate` text COLLATE utf8_hungarian_ci NOT NULL,
-  `model` text COLLATE utf8_hungarian_ci NOT NULL,
-  `fuel` text COLLATE utf8_hungarian_ci NOT NULL,
-  `consumption` float NOT NULL,
+  `license_plate` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `model` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `fuel` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `consumption` int(11) NOT NULL,
   `starting_mileage` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
--- A tábla adatainak kiíratása `cars`
+-- A tábla adatainak kiíratása `car`
 --
 
-INSERT INTO `cars` (`Id`, `license_plate`, `model`, `fuel`, `consumption`, `starting_mileage`) VALUES
-(1, 'ABC123', 'Toyota Corolla', 'Benzin', 6.5, 10000),
-(2, 'XYZ789', 'Volkswagen Golf', 'Dízel', 5.8, 12000),
-(3, 'DEF456', 'Ford Focus', 'Benzin', 7.2, 10500),
-(4, 'GHI789', 'Honda Civic', 'Benzin', 4.3, 11000),
-(5, 'JKL012', 'BMW 3 Series', 'Benzin', 8.1, 9500),
-(6, 'MNO345', 'Audi A4', 'Dízel', 6.2, 11500),
-(7, 'PQR678', 'Mercedes-Benz C-Class', 'Benzin', 7.5, 9800),
-(8, 'STU901', 'Kia Sportage', 'Dízel', 6.8, 10200),
+INSERT INTO `car` (`Id`, `license_plate`, `model`, `fuel`, `consumption`, `starting_mileage`) VALUES
+(1, 'ABC123', 'Toyota Corolla', 'Benzin', 7, 10000),
+(2, 'XYZ789', 'Volkswagen Golf', 'Dízel', 6, 12000),
+(3, 'DEF456', 'Ford Focus', 'Benzin', 7, 10500),
+(4, 'GHI789', 'Honda Civic', 'Benzin', 4, 11000),
+(5, 'JKL012', 'BMW 3 Series', 'Benzin', 8, 9500),
+(6, 'MNO345', 'Audi A4', 'Dízel', 6, 11500),
+(7, 'PQR678', 'Mercedes-Benz C-Class', 'Benzin', 8, 9800),
+(8, 'STU901', 'Kia Sportage', 'Dízel', 7, 10200),
 (9, 'VWX234', 'Subaru Outback', 'Benzin', 7, 9600),
 (10, 'YZA567', 'Nissan Rogue', 'Benzin', 5, 10700),
-(11, 'SJJ702', 'Honda Accord', 'Benzin', 9.4, 110000);
+(11, 'SJJ702', 'Honda Accord', 'Benzin', 9, 110000);
 
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `drivers`
+-- Tábla szerkezet ehhez a táblához `driver`
 --
 
-CREATE TABLE `drivers` (
+CREATE TABLE `driver` (
   `Id` int(11) NOT NULL,
-  `name` text COLLATE utf8_hungarian_ci NOT NULL,
-  `birthDate` text COLLATE utf8_hungarian_ci NOT NULL,
-  `address` text COLLATE utf8_hungarian_ci NOT NULL,
-  `licenseNumber` text COLLATE utf8_hungarian_ci NOT NULL,
-  `licenseExpirationDate` text COLLATE utf8_hungarian_ci NOT NULL
+  `name` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `birthDate` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `address` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `licenseNumber` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `licenseExpirationDate` varchar(255) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
--- A tábla adatainak kiíratása `drivers`
+-- A tábla adatainak kiíratása `driver`
 --
 
-INSERT INTO `drivers` (`Id`, `name`, `birthDate`, `address`, `licenseNumber`, `licenseExpirationDate`) VALUES
+INSERT INTO `driver` (`Id`, `name`, `birthDate`, `address`, `licenseNumber`, `licenseExpirationDate`) VALUES
 (1, 'John Doe', '1995-01-05', '123 Main Street, Town', 'ABC124', '2030-08-02'),
 (2, 'Jane Smith', '1985-08-20', '456 Elm Street, Othertown', 'XYZ789', '2024-07-15'),
 (3, 'Michael Johnson', '1978-03-10', '789 Maple Avenue, Another Town', 'DEF456', '2023-09-30'),
@@ -88,26 +88,26 @@ INSERT INTO `drivers` (`Id`, `name`, `birthDate`, `address`, `licenseNumber`, `l
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `trips`
+-- Tábla szerkezet ehhez a táblához `trip`
 --
 
-CREATE TABLE `trips` (
+CREATE TABLE `trip` (
   `Id` int(11) NOT NULL,
-  `car` text COLLATE utf8_hungarian_ci NOT NULL,
-  `driver` text COLLATE utf8_hungarian_ci NOT NULL,
-  `startDate` text COLLATE utf8_hungarian_ci NOT NULL,
-  `tripType` text COLLATE utf8_hungarian_ci NOT NULL,
-  `startPlace` text COLLATE utf8_hungarian_ci NOT NULL,
-  `endPlace` text COLLATE utf8_hungarian_ci NOT NULL,
+  `car` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `driver` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `startDate` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `tripType` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `startPlace` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `endPlace` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
   `distance` int(11) NOT NULL,
   `newMileage` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
--- A tábla adatainak kiíratása `trips`
+-- A tábla adatainak kiíratása `trip`
 --
 
-INSERT INTO `trips` (`Id`, `car`, `driver`, `startDate`, `tripType`, `startPlace`, `endPlace`, `distance`, `newMileage`) VALUES
+INSERT INTO `trip` (`Id`, `car`, `driver`, `startDate`, `tripType`, `startPlace`, `endPlace`, `distance`, `newMileage`) VALUES
 (76, 'Toyota Corolla', 'Emily Williams', '2023-11-19', 'Magán', 'Miskolc', 'Budapest', 500, 10500),
 (77, 'Toyota Corolla', 'Jessica Wilson', '2023-11-20', 'Magán', 'Miskolc', 'Szeged', 300, 10800),
 (78, 'Toyota Corolla', 'Jessica Wilson', '2023-11-21', 'Magán', 'Szeged', 'Miskolc', 300, 11100),
@@ -118,54 +118,71 @@ INSERT INTO `trips` (`Id`, `car`, `driver`, `startDate`, `tripType`, `startPlace
 (83, 'BMW 3 Series', 'John Doe', '2023-12-14', 'Céges', 'Székesfehérvár', 'Budapest', 150, 9650),
 (84, 'BMW 3 Series', 'Christopher Brown', '2023-12-16', 'Magán', 'Budapest', 'Gödöllő', 50, 9700),
 (85, 'BMW 3 Series', 'Christopher Brown', '2023-12-16', 'Magán', 'Gödöllő', 'Budapest', 50, 9750),
-(86, 'BMW 3 Series', 'Kevin Garcia', '2024-01-14', 'Magán', 'Miskolc', 'Budapest', 180, 9930);
+(86, 'BMW 3 Series', 'Kevin Garcia', '2024-01-14', 'Magán', 'Miskolc', 'Budapest', 180, 9930),
+(234, 'Kia Sportage', 'John Doe', '2023-11-27', 'Magán', 'Miskolc', 'Ózd', 180, 10380),
+(235, 'Kia Sportage', 'Jack Powell', '2023-11-28', 'Céges', 'Ózd', 'Miskolc', 10, 10390),
+(236, 'Kia Sportage', 'Jane Smith', '2024-03-06', 'Céges', 'Miskolc', 'Budapest', 180, 10570),
+(237, 'Kia Sportage', 'Jane Smith', '2024-03-06', 'Céges', 'Budapest', 'Miskolc', 180, 10750),
+(238, 'Honda Accord', 'Jack Powell', '2023-11-21', 'Magán', 'Szeged', 'Miskolc', 250, 110250),
+(239, 'Honda Accord', 'Jack Powell', '2023-11-21', 'Magán', 'Miskolc', 'Szeged', 250, 110500),
+(241, 'Subaru Outback', 'Christopher Brown', '2024-01-20', 'Magán', 'Miskolc', 'Sátoraljaújhely', 84, 9684),
+(242, 'Subaru Outback', 'Jack Powell', '2024-02-11', 'Magán', 'Miskolc', 'Sátoraljaújhely', 84, 9768),
+(243, 'Subaru Outback', 'Jack Powell', '2024-02-11', 'Magán', 'Sátoraljaújhely', 'Miskolc', 84, 9852),
+(244, 'Volkswagen Golf', 'Jane Smith', '2023-11-14', 'Céges', 'Miskolc', 'Szeged', 250, 12250),
+(245, 'Volkswagen Golf', 'Jane Smith', '2023-11-14', 'Céges', 'Szeged', 'Miskolc', 250, 12500),
+(246, 'Ford Focus', 'Kevin Garcia', '2023-09-10', 'Magán', 'Kőszeg', 'Miskolc', 450, 10950),
+(247, 'Ford Focus', 'Emily Williams', '2023-11-14', 'Céges', 'Miskolc', 'Encs', 40, 10990),
+(248, 'Ford Focus', 'Emily Williams', '2023-11-14', 'Céges', 'Encs', 'Miskolc', 40, 11030),
+(249, 'Honda Civic', 'Christopher Brown', '2024-03-28', 'Magán', 'Békéscsaba', 'Siófok', 301, 11301),
+(250, 'Honda Civic', 'Christopher Brown', '2024-03-28', 'Magán', 'Siófok', 'Békéscsaba', 301, 11602),
+(251, 'Audi A4', 'John Doe', '2024-04-13', 'Céges', 'Szentgotthárd', 'Esztergom', 267, 11767),
+(252, 'Nissan Rogue', 'Jack Powell', '2023-12-05', 'Céges', 'Székesfehérvár', 'Keszthely', 128, 10868);
 
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `users`
+-- Tábla szerkezet ehhez a táblához `user`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE `user` (
   `Id` int(11) NOT NULL,
-  `username` text COLLATE utf8_hungarian_ci NOT NULL,
-  `password` text COLLATE utf8_hungarian_ci NOT NULL
+  `username` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
--- A tábla adatainak kiíratása `users`
+-- A tábla adatainak kiíratása `user`
 --
 
-INSERT INTO `users` (`Id`, `username`, `password`) VALUES
-(57, 'asd', 'asd'),
-(61, 'asdd', 'asd');
+INSERT INTO `user` (`Id`, `username`, `password`) VALUES
+(80, 'asd', 'asd');
 
 --
 -- Indexek a kiírt táblákhoz
 --
 
 --
--- A tábla indexei `cars`
+-- A tábla indexei `car`
 --
-ALTER TABLE `cars`
+ALTER TABLE `car`
   ADD PRIMARY KEY (`Id`);
 
 --
--- A tábla indexei `drivers`
+-- A tábla indexei `driver`
 --
-ALTER TABLE `drivers`
+ALTER TABLE `driver`
   ADD PRIMARY KEY (`Id`);
 
 --
--- A tábla indexei `trips`
+-- A tábla indexei `trip`
 --
-ALTER TABLE `trips`
+ALTER TABLE `trip`
   ADD PRIMARY KEY (`Id`);
 
 --
--- A tábla indexei `users`
+-- A tábla indexei `user`
 --
-ALTER TABLE `users`
+ALTER TABLE `user`
   ADD PRIMARY KEY (`Id`);
 
 --
@@ -173,28 +190,28 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT a táblához `cars`
+-- AUTO_INCREMENT a táblához `car`
 --
-ALTER TABLE `cars`
+ALTER TABLE `car`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT a táblához `drivers`
+-- AUTO_INCREMENT a táblához `driver`
 --
-ALTER TABLE `drivers`
+ALTER TABLE `driver`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT a táblához `trips`
+-- AUTO_INCREMENT a táblához `trip`
 --
-ALTER TABLE `trips`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+ALTER TABLE `trip`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=253;
 
 --
--- AUTO_INCREMENT a táblához `users`
+-- AUTO_INCREMENT a táblához `user`
 --
-ALTER TABLE `users`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+ALTER TABLE `user`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
