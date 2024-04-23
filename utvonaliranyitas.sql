@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Ápr 13. 11:26
+-- Létrehozás ideje: 2024. Ápr 23. 08:22
 -- Kiszolgáló verziója: 10.4.25-MariaDB
 -- PHP verzió: 8.1.10
 
@@ -76,7 +76,7 @@ INSERT INTO `driver` (`Id`, `name`, `birthDate`, `address`, `licenseNumber`, `li
 (1, 'John Doe', '1995-01-05', '123 Main Street, Town', 'ABC124', '2030-08-02'),
 (2, 'Jane Smith', '1985-08-20', '456 Elm Street, Othertown', 'XYZ789', '2024-07-15'),
 (3, 'Michael Johnson', '1978-03-10', '789 Maple Avenue, Another Town', 'DEF456', '2023-09-30'),
-(4, 'Emily Williams', '1995-11-25', '321 Oak Street, Yet Another Town', 'GHI789', '2026-05-20'),
+(4, 'Emily Williams', '1995-11-20', '321 Oak Street, Yet Another Town', 'GHI789', '2026-05-28'),
 (5, 'Christopher Brown', '1992-06-08', '567 Pine Road, Smallville', 'JLK014', '2024-08-10'),
 (6, 'Jessica Wilson', '1973-09-18', '890 Cedar Lane, Suburbia', 'MNO345', '2024-04-05'),
 (7, 'David Martinez', '1989-02-28', '654 Birch Boulevard, Countryside', 'PQR678', '2023-10-25'),
@@ -155,7 +155,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`Id`, `username`, `password`) VALUES
-(80, 'asd', 'asd');
+(85, 'asd', '$2b$12$QEb/Zu7uHSkxMWUaRlIP2.uZ72WH7BIACQheANQMilZ1JnOXJrlBm'),
+(86, 'Bazsi', '$2b$12$geIZY1zeb6P45zjl6fXtPupkl6K1KH1t.kymvYhXnAxrmL.T4I89C');
 
 --
 -- Indexek a kiírt táblákhoz
@@ -211,7 +212,7 @@ ALTER TABLE `trip`
 -- AUTO_INCREMENT a táblához `user`
 --
 ALTER TABLE `user`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

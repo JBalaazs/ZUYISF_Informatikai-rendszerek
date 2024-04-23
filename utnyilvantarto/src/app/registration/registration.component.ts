@@ -85,20 +85,6 @@ export class RegistrationComponent implements OnInit {
 
     }
 
-    this.regDatas.forEach(users =>{
-
-      if(users.username == userData.username && users.password == userData.password)
-      {
-
-        foundProfile = true;
-
-      }
-
-    }); 
-
-    if(foundProfile)
-    {
-
       this.registrationService.login(userData).subscribe(
         (response: AuthResponse) => {
           
@@ -107,16 +93,11 @@ export class RegistrationComponent implements OnInit {
           alert("Sikeres bejelentkezés!");
           this.router.navigate(['/drivers']);
           
+        },
+        (error) => {
+          alert("Sikertelen bejelentkezés");
         }
       )
-
-    }
-    else
-    {
-
-      alert("Sikertelen bejelentkezés!");
-
-    }
 
   }
 

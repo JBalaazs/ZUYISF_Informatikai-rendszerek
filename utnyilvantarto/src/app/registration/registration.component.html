@@ -15,8 +15,8 @@
         </div>
 
         <div class="text-center">
-            <button type="submit" class="btn btn-primary m-2" (click)="registration(registerForm)">Regisztráció</button>
-            <button type="submit" class="btn btn-primary m-2" (click)="login(registerForm)">Bejelentkezés</button>
+            <button type="submit" class="btn btn-primary m-2" (click)="registration(registerForm)" [disabled]="registerForm.invalid">Regisztráció</button>
+            <button type="submit" class="btn btn-primary m-2" (click)="login(registerForm)" [disabled]="registerForm.invalid">Bejelentkezés</button>
             <button type="submit" class="btn btn-primary m-2" (click)="logout(registerForm)">Kijelentkezés</button>
         </div>
 

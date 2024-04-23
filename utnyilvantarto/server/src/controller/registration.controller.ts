@@ -3,6 +3,7 @@ import { AppDataSource } from '../data-source';
 import { User } from '../entity/User';
 import { Controller } from "./base.controller";
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 export class RegistrationController extends Controller {
 
@@ -13,7 +14,8 @@ export class RegistrationController extends Controller {
     postReg = async (req: Request, res: Response) => {
         const newUser = new User();
         newUser.username = req.body.username;
-        newUser.password = req.body.password;
+        const hashedPassword = await bcrypt.hash(req.body.password, 12);
+        newUser.password = hashedPassword;
 
         try {
             const savedUser = await this.repository.save(newUser);
@@ -43,17 +45,20 @@ export class RegistrationController extends Controller {
             if (!user) {
                 res.status(500).json({ message: 'Hiba történt a bejelentkezés során.' });
             }
-  
-            const findUserPass = (req.body.password === user.password);
-            if (findUserPass) {
-
-                const token = jwt.sign({ username: user.username }, 'secret_key', { expiresIn: '1h' }); /*Generáljunk egy JWT tokent és küldjük vissza*/
-                res.json({ jwtToken: token });
-            }
             else
             {
 
-                res.status(401).json({ message: 'Sikertelen bejelentkezés. Hibás felhasználónév vagy jelszó.' }); /*Ha nem találtunk egyezést a felhasználónévre és jelszóra az adatbázisban.*/
+                const findUserPass = await bcrypt.compare(req.body.password, user.password);
+
+                if (findUserPass) {
+    
+                    const token = jwt.sign({ username: user.username }, 'secret_key', { expiresIn: '1h' }); /*Generáljunk egy JWT tokent és küldjük vissza*/
+                    res.json({ jwtToken: token });
+                }
+                else
+                {
+                    res.status(401).json({ message: 'Sikertelen bejelentkezés. Hibás felhasználónév vagy jelszó.' }); /*Ha nem találtunk egyezést a felhasználónévre és jelszóra az adatbázisban.*/
+                }
 
             }
   

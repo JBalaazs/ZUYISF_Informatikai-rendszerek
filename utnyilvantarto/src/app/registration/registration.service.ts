@@ -32,6 +32,6 @@ export class RegistrationService {
     callProtectedEndpoint(token: string) {
         const headers = { Authorization: `Bearer ` + token };
         return this.http.post<any>('/api/protected_endpoint', {}, { headers });
-      }
+    }
 
 }
